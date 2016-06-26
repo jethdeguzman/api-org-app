@@ -14,7 +14,7 @@ class Notebook(models.Model):
     def __unicode__(self):
         return self.name
 
-class Notes(models.Model):
+class Note(models.Model):
     notebook = models.ForeignKey(Notebook, null=True, blank=False, related_name='notes')
     title = models.CharField(max_length=80, null=True, blank=False)
     text = models.TextField(null=True, blank=False)
