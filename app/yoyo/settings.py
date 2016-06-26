@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'notebook.apps.NotebookConfig',
+    'checklist.apps.ChecklistConfig',
     'djangobower',
     'pipeline',
 ]
