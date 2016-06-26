@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'checklist.apps.ChecklistConfig',
     'djangobower',
     'pipeline',
+    'rest_framework'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -127,3 +128,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 BOWER_INSTALLED_APPS = ()
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 10,
+    'EXCEPTION_HANDLER': 'manager.exceptions.custom_exception_handler'
+}
