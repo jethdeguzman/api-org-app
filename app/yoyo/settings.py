@@ -61,7 +61,7 @@ ROOT_URLCONF = 'yoyo.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "web", "templates", "web"),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,7 +140,8 @@ STATICFILES_FINDERS = (
 STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
 
 BOWER_INSTALLED_APPS = (
-    'materialize#v0.97.6',
+    'gentelella#1.1.0',
+    'bootstrap-select#1.10.0'
 )
 
 PIPELINE = {
@@ -149,8 +150,13 @@ PIPELINE = {
     'JAVASCRIPT': {
         'web': {
             'source_filenames': (
-                'jquery/dist/jquery.min.js',
-                'Materialize/dist/js/materialize.min.js',
+                'gentelella/production/js/jquery.min.js',
+                'gentelella/production/js/bootstrap.min.js',
+                'gentelella/production/js/datatables/jquery.dataTables.min.js',
+                'gentelella/production/js/datatables/dataTables.bootstrap.js',
+                'gentelella/production/js/datatables/dataTables.responsive.min.js',
+                'gentelella/production/js/custom.js',
+                'web/js/script.js',
             ),
             'output_filename': 'web/js/web.js',
         },
@@ -158,7 +164,13 @@ PIPELINE = {
     'STYLESHEETS': {
         'web' : {
             'source_filenames' : (
-                'Materialize/dist/css/materialize.css',
+                'gentelella/production/css/bootstrap.min.css',
+                'gentelella/production/fonts/css/font-awesome.min.css',
+                'gentelella/production/js/datatables/jquery.dataTables.min.css',
+                'gentelella/production/js/datatables/responsive.bootstrap.min.css',
+                'bootstrap-select/dist/css/bootstrap-select.min.css',
+                'gentelella/production/css/custom.css',
+                'web/css/style.css',
             ),
             'output_filename': 'web/css/web.css'
         }
