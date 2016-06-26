@@ -23,7 +23,7 @@ class ChecklistItem(models.Model):
 
     def save(self, *args, **kwargs):
         self.date_updated = datetime.datetime.now()
-        super(ChecklistItems, self).save(*args, **kwargs)
+        super(ChecklistItem, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.title
