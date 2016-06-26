@@ -140,14 +140,29 @@ STATICFILES_FINDERS = (
 STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
 
 BOWER_INSTALLED_APPS = (
-    'materialize#0.97.6'
+    'materialize#v0.97.6',
 )
 
 PIPELINE = {
     'PIPELINE_ENABLED': True,
     'JS_COMPRESSOR' : 'pipeline.compressors.jsmin.JSMinCompressor',
-    'JAVASCRIPT': {},
-    'STYLESHEETS': {},
+    'JAVASCRIPT': {
+        'web': {
+            'source_filenames': (
+                'jquery/dist/jquery.min.js',
+                'Materialize/dist/js/materialize.min.js',
+            ),
+            'output_filename': 'web/js/web.js',
+        },
+    },
+    'STYLESHEETS': {
+        'web' : {
+            'source_filenames' : (
+                'Materialize/dist/css/materialize.css',
+            ),
+            'output_filename': 'web/css/web.css'
+        }
+    },
 }
 
 REST_FRAMEWORK = {
