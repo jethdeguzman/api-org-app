@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'notebook.apps.NotebookConfig',
     'checklist.apps.ChecklistConfig',
+    'web.apps.WebConfig',
     'djangobower',
     'pipeline',
     'rest_framework'
@@ -127,7 +128,27 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-BOWER_INSTALLED_APPS = ()
+STATICFILES_DIRS = ()
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+    'pipeline.finders.PipelineFinder',
+)
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+
+BOWER_INSTALLED_APPS = (
+    'materialize#0.97.6'
+)
+
+PIPELINE = {
+    'PIPELINE_ENABLED': True,
+    'JS_COMPRESSOR' : 'pipeline.compressors.jsmin.JSMinCompressor',
+    'JAVASCRIPT': {},
+    'STYLESHEETS': {},
+}
 
 REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
