@@ -14,9 +14,10 @@ class Checklist(models.Model):
     def __unicode__(self):
         return self.name
 
-class ChecklistItems(models.Model):
+class ChecklistItem(models.Model):
     checklist = models.ForeignKey(Checklist, null=True, blank=False, related_name='items')
     title = models.CharField(max_length=80, null=True, blank=False)
+    done = models.BooleanField(default=False)
     date_created = models.DateTimeField(default=datetime.datetime.now, blank=False, null=False)
     date_updated = models.DateTimeField(default=datetime.datetime.now, blank=False, null=False)
 
