@@ -23,7 +23,7 @@ class Note(models.Model):
 
     def save(self, *args, **kwargs):
         self.date_updated = datetime.datetime.now()
-        super(Notes, self).save(*args, **kwargs)
+        super(Note, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.title
