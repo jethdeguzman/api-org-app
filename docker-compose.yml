@@ -1,0 +1,7 @@
+web:
+  build: .
+  command: uwsgi --ini uwsgi.ini
+  volumes:
+    - ./app:/app
+  ports:
+    - "3000:3000"
