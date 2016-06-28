@@ -1,0 +1,48 @@
+body {
+    background: #FFFFFF;
+}
+
+.no-border{
+    border:0px;
+}
+
+.spacer{
+    height: 60px;
+}
+
+.text-underline{
+    text-decoration: underline;
+}
+
+.notes-item{
+    padding:5px; 
+    border-bottom:1px solid #ECECEC;
+}
+
+.notes-item .title h4{
+    margin-bottom:0px;
+}
+
+.notes-item .content p{
+    font-size: 14px;
+}
+
+.notes-input-title{
+    box-shadow:inherit; 
+    border:0px; 
+    height: 50px; 
+    font-size: 32px;
+}
+
+.notes-input-text{
+    box-shadow:inherit; 
+    border:0px; 
+    height: 320px; 
+    font-size: 16px;
+}
+
+#message-wrapper .alert{
+    margin-bottom: 0px;
+    padding:5px;
+    border-radius: 0px;
+}

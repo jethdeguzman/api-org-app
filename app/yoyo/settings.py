@@ -141,7 +141,7 @@ STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
 
 BOWER_INSTALLED_APPS = (
     'gentelella#1.1.0',
-    'bootstrap-select#1.10.0'
+    'sweetalert#1.1.3',
 )
 
 PIPELINE = {
@@ -152,9 +152,7 @@ PIPELINE = {
             'source_filenames': (
                 'gentelella/production/js/jquery.min.js',
                 'gentelella/production/js/bootstrap.min.js',
-                'gentelella/production/js/datatables/jquery.dataTables.min.js',
-                'gentelella/production/js/datatables/dataTables.bootstrap.js',
-                'gentelella/production/js/datatables/dataTables.responsive.min.js',
+                'sweetalert/dist/sweetalert.min.js',
                 'gentelella/production/js/custom.js',
                 'web/js/script.js',
             ),
@@ -166,9 +164,8 @@ PIPELINE = {
             'source_filenames' : (
                 'gentelella/production/css/bootstrap.min.css',
                 'gentelella/production/fonts/css/font-awesome.min.css',
-                'gentelella/production/js/datatables/jquery.dataTables.min.css',
                 'gentelella/production/js/datatables/responsive.bootstrap.min.css',
-                'bootstrap-select/dist/css/bootstrap-select.min.css',
+                'sweetalert/dist/sweetalert.css',
                 'gentelella/production/css/custom.css',
                 'web/css/style.css',
             ),

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block body %}
+{% block nav %} {% endblock %}
+<div class="spacer">
+    <div id="message-wrapper">
+    {% include "web/includes/messages.html" %}
+    </div>
+</div>
+{% block content %} {% endblock %}
+{% endblock %}

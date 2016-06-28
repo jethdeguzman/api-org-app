@@ -1,0 +1,3 @@
+<form id="deleteNoteForm" method="post" action="{% url 'note_delete' pk=pk %}">
+    {% csrf_token %}
+</form>
