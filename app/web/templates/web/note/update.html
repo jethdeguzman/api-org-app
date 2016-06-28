@@ -1,0 +1,6 @@
+{% extends "web/note/base_note.html" %}
+{% block note_content %}
+{% with action_url='note_update' pk=note.id %}
+    {% include 'web/note/includes/note_form.html' %}
+{% endwith %}
+{% endblock %}

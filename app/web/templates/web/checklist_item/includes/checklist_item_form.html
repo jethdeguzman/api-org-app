@@ -1,0 +1,17 @@
+<form action="{% url 'checklist_item_update_view' pk=item.data.pk %}" method="post" id="updateChecklistItemForm">
+    {% csrf_token %}
+    <div class="col-xs-10">
+        <div class="input-group">
+            <span class="input-group-addon">
+                {{ item.form.done }}
+            </span>
+            {{ item.form.title }}
+        </div>
+    </div>
+    <div class="col-xs-1">
+        <button class="btn btn-warning" type="submit" form="updateChecklistItemForm"><i class="fa fa-edit"></i></button>
+    </div>
+    <div class="col-xs-1">
+        <button class="btn btn-danger btn-continue" type="submit" form="deleteChecklistItemForm" data-continue-text="It will now delete this checklist item "><i class="fa fa-trash"></i></button>
+    </div>
+</form>

@@ -1,0 +1,39 @@
+{% extends "base_web.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+        <a  href="{{ checklist_url }}" class="pull-right text-underline"><strong><i class="fa fa-info-circle"></i> Switch to Checklist</strong></a>  
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+        <div class="col-sm-4 col-xs-12" style="border:1px solid #ECECEC;">
+            <div class="row" style="border-bottom:1px solid #ECECEC;">
+                <div class="col-xs-12" style=" color: #878799">
+                    <div style="padding:5px 5px 30px">
+                        <h2>NOTES <small style="margin-bottom:5px;">({{ notes.count }})</small></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height:400px; overflow-x: hidden; overflow-y: auto;">
+                <div class="col-xs-12">
+                    {% for note in notes%}
+                    <div class="notes-item">
+                        <div class="title">
+                            <h4><a href="{% url 'note_update' pk=note.id %}" class="text-underline">{{ note.title }}</a></h4>
+                            <small>{{ note.date_created|date:"n/j/Y" }} - {{ note.notebook.name }}</small>
+                        </div>
+                        <div class="content">
+                            <p>{{ note.text }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-xs-12">
+        {% block note_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

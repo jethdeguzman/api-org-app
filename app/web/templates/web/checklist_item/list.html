@@ -1,0 +1,43 @@
+{% extends "base_web.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+        <a href="{% url 'note_create' %}" class="pull-right text-underline"><strong><i class="fa fa-info-circle"></i> Switch to Notebook</strong></a>  
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+        <div class="x_panel no-border">
+            <div class="x_title">
+                <strong><i class="fa fa-list-alt"></i> Checklists</strong>
+                <select class="form-control" id="checklists-select">
+                    {% for cl in checklists %}
+                    <option value="{% url 'checklist_item_view' pk=cl.id %}" {% if checklist.id == cl.id %} selected {% endif %}>{{ cl.name }}</option>>
+                    {% endfor %}
+                </select>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="" style="height:300px; overflow-x:hidden; overflow-y:auto;">
+                    {% for item in checklist_items %}
+                    <div class="row">
+                        {% include 'web/checklist_item/includes/delete_checklist_item_form.html' %}
+                        {% include 'web/checklist_item/includes/checklist_item_form.html' %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <form action="{% url 'checklist_item_create_view' pk=checklist.pk %}" method="post" id="addChecklistItemForm">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="title" placeholder="Checklist Item" required="required">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit" form="addChecklistItemForm">Add Item</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

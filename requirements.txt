@@ -1,0 +1,6 @@
+django==1.9.7
+uwsgi==2.0.12
+django-bower==5.1.0
+django-pipeline==1.6.8
+jsmin==2.2.1
+djangorestframework==3.3.3
