@@ -131,8 +131,7 @@ class ChecklistItemCreateView(BaseView):
         title = request.POST.get('title')
         checklist = Checklist.objects.get(pk=self.kwargs.get('pk'))
         data = {'checklist': checklist, 'title' : title, 'done' : False}
-        print 'asdads'
-        print data
+        
         try:
             ChecklistItem.objects.create(**data)
             messages.add_message(self.request, messages.SUCCESS, 'Checklist item is successfully created.')
