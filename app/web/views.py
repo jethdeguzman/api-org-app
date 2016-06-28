@@ -8,18 +8,26 @@ from notebook.models import Note, Notebook
 from checklist.models import Checklist, ChecklistItem
 
 class BaseView(View):
-    pass
+    def get_checklist_url(self):
+        checklist_url = '/'
+        checklist = Checklist.objects.first()
+        if checklist:
+            checklist_url = reverse('checklist_item_view', kwargs={'pk' : checklist.pk })
+
+        return checklist_url
 
 class IndexView(BaseView):
     def get(self, request):
         context = {}
-        context['notes'] = Note.objects.all().order_by('-id') 
+        context['checklist_url'] = self.get_checklist_url
+        
         return render(request, 'web/index.html', context)
 
 class BaseNoteView(BaseView):
     def get_context_data(self, **kwargs):
         context = super(BaseNoteView, self).get_context_data(**kwargs)
         context['notes'] = Note.objects.all().order_by('-date_updated')
+        context['checklist_url'] = self.get_checklist_url
         return context
 
 class NoteCreateView(BaseNoteView, FormView):
@@ -102,7 +110,7 @@ class ChecklistItemListView(BaseView, DetailView):
             )} for item in self.get_object().items.all().order_by('-date_created')]
         return context
 
-class ChecklistItemUpdateView(UpdateView):
+class ChecklistItemUpdateView(BaseView, UpdateView):
     model = ChecklistItem
     fields = ['title', 'done']
     template_name = 'web/checklist_item/list.html'
@@ -111,7 +119,7 @@ class ChecklistItemUpdateView(UpdateView):
         messages.add_message(self.request, messages.SUCCESS, 'Checklist Item is successfully updated.')
         return reverse('checklist_item_view', kwargs={'pk' : self.get_object().checklist.pk })
 
-class ChecklistItemDeleteView(DeleteView):
+class ChecklistItemDeleteView(BaseView, DeleteView):
     model = ChecklistItem
 
     def get_success_url(self):
