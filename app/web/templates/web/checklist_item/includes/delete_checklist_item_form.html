@@ -1,0 +1,3 @@
+<form id="deleteChecklistItemForm" method="post" action="{% url 'checklist_item_delete_view' pk=item.data.pk %}">
+    {% csrf_token %}
+</form>

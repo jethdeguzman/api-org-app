@@ -152,6 +152,7 @@ PIPELINE = {
             'source_filenames': (
                 'gentelella/production/js/jquery.min.js',
                 'gentelella/production/js/bootstrap.min.js',
+                'gentelella/production/js/icheck/icheck.min.js',
                 'sweetalert/dist/sweetalert.min.js',
                 'gentelella/production/js/custom.js',
                 'web/js/script.js',
@@ -164,7 +165,7 @@ PIPELINE = {
             'source_filenames' : (
                 'gentelella/production/css/bootstrap.min.css',
                 'gentelella/production/fonts/css/font-awesome.min.css',
-                'gentelella/production/js/datatables/responsive.bootstrap.min.css',
+                'gentelella/production/css/icheck/flat/green.css',
                 'sweetalert/dist/sweetalert.css',
                 'gentelella/production/css/custom.css',
                 'web/css/style.css',
