@@ -33,6 +33,7 @@ ADD requirements.txt /app/
 RUN pip install -r /app/requirements.txt
 ADD app /app
 WORKDIR /app
+RUN python manage.py migrate
 RUN python manage.py bower_install -- --allow-root --no-input
 RUN python manage.py collectstatic --no-input
 EXPOSE 3000
