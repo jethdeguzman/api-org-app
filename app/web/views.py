@@ -3,7 +3,8 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.generic import (View, FormView, DetailView, ListView, 
     DeleteView, UpdateView, CreateView)
-from .forms import NoteForm, ChecklistItemForm, ChecklistItemForm, NoteSwitchForm
+from .forms import (NoteForm, ChecklistItemForm, ChecklistItemForm, NoteSwitchForm, 
+    ChecklistItemSwitchForm)
 from notebook.models import Note, Notebook
 from checklist.models import Checklist, ChecklistItem
 
@@ -12,7 +13,7 @@ class BaseView(View):
         checklist_url = '/'
         checklist = Checklist.objects.first()
         if checklist:
-            checklist_url = reverse('checklist_item_view', kwargs={'pk' : checklist.pk })
+            checklist_url = reverse('checklist_item_list', kwargs={'pk' : checklist.pk })
 
         return checklist_url
 
@@ -117,14 +118,14 @@ class ChecklistItemUpdateView(BaseView, UpdateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Checklist Item is successfully updated.')
-        return reverse('checklist_item_view', kwargs={'pk' : self.get_object().checklist.pk })
+        return reverse('checklist_item_list', kwargs={'pk' : self.get_object().checklist.pk })
 
 class ChecklistItemDeleteView(BaseView, DeleteView):
     model = ChecklistItem
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Checklist Item is successfully deleted.')
-        return reverse('checklist_item_view', kwargs={'pk' : self.get_object().checklist.pk })
+        return reverse('checklist_item_list', kwargs={'pk' : self.get_object().checklist.pk })
 
 class ChecklistItemCreateView(BaseView):
     def post(self, request, *args, **kwargs):
@@ -138,7 +139,7 @@ class ChecklistItemCreateView(BaseView):
         except Exception:
             messages.add_message(self.request, messages.ERROR, 'Failed to create Checklist item.')
 
-        return redirect(reverse('checklist_item_view', kwargs={'pk' : self.kwargs.get('pk') }))
+        return redirect(reverse('checklist_item_list', kwargs={'pk' : self.kwargs.get('pk') }))
 
 class NoteSwitchView(DetailView, FormView):
     context_object_name = 'note'
@@ -162,10 +163,38 @@ class NoteSwitchView(DetailView, FormView):
             self.get_object().delete()
             
             messages.add_message(self.request, messages.SUCCESS, 'Checklist item is successfully created.')
-            return redirect(reverse('checklist_item_view', kwargs={'pk' : data['checklists']}))
+            return redirect(reverse('checklist_item_list', kwargs={'pk' : data['checklists']}))
         
         except Exception:
             messages.add_message(self.request, messages.ERROR, 'Failed to update note.')
             return redirect(reverse('note_update', kwargs={'pk' : self.get_object().pk }))
 
 
+class ChecklistItemSwitchView(DetailView, FormView):
+    context_object_name = 'checklist_item'
+    form_class = ChecklistItemSwitchForm
+    model = ChecklistItem
+    template_name = 'web/checklist_item/switch.html'
+
+    def get_form_kwargs(self): 
+        kwargs = super(ChecklistItemSwitchView, self).get_form_kwargs()
+        notebooks = Notebook.objects.all()
+        kwargs.update({'notebooks' : notebooks.values_list('id', 'name')})
+        return kwargs
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+
+        try:
+            notebook = Notebook.objects.get(id=data['notebooks'])
+            note_data = {'notebook' : notebook, 'title' : self.get_object().title}
+            note = Note.objects.create(**note_data)
+            self.get_object().delete()
+            
+            messages.add_message(self.request, messages.SUCCESS, 'Note is successfully created.')
+            return redirect(reverse('note_update', kwargs={'pk' : note.id }))
+            
+        except Exception:
+            messages.add_message(self.request, messages.ERROR, 'Failed to update checklist item.')
+            return redirect(reverse('checklist_item_list', kwargs={'pk' : self.get_object().checklist.id }))
+            

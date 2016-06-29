@@ -1,12 +1,15 @@
-<form action="{% url 'checklist_item_update_view' pk=item.data.pk %}" method="post" id="updateChecklistItemForm">
+<form action="{% url 'checklist_item_update' pk=item.data.pk %}" method="post" id="updateChecklistItemForm">
     {% csrf_token %}
-    <div class="col-xs-10">
+    <div class="col-xs-9">
         <div class="input-group">
             <span class="input-group-addon">
                 {{ item.form.done }}
             </span>
             {{ item.form.title }}
         </div>
+    </div>
+    <div class="col-xs-1">
+        <a href="{% url 'checklist_item_switch' pk=item.data.pk %}" class="btn btn-dark"><i class="fa fa-exchange"></i></a>
     </div>
     <div class="col-xs-1">
         <button class="btn btn-warning" type="submit" form="updateChecklistItemForm"><i class="fa fa-edit"></i></button>

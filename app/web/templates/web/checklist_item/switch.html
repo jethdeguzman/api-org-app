@@ -1,0 +1,20 @@
+{% extends "base_web.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
+        <h2 class="text-center">Switch this Checklist Item as Note</h2><hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
+        <form action="{% url 'checklist_item_switch' pk=checklist_item.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Select Notebook:</label><br>
+                {{ form.notebooks }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

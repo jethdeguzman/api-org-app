@@ -33,3 +33,14 @@ class NoteSwitchForm(forms.Form):
         self.fields['checklists'].choices = self.checklists
 
 
+class ChecklistItemSwitchForm(forms.Form):
+    notebooks = forms.ChoiceField(label='Notebooks', widget=forms.Select(attrs={'class': 'form-control', 'placeholder' : 'Checklists', 'required' : 'required'}))
+
+    def __init__(self, *args, **kwargs):
+        self.notebooks = None
+        if 'notebooks' in kwargs:
+            self.notebooks = kwargs.pop('notebooks')
+        super(ChecklistItemSwitchForm, self).__init__(*args, **kwargs)
+        self.fields['notebooks'].choices = self.notebooks
+
+        

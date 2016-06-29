@@ -23,4 +23,6 @@ $(document).ready(function() {
     $('#checklists-select').change(function(){
         window.location.href=$(this).val();
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
 });
