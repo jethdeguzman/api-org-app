@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.generic import (View, FormView, DetailView, ListView, 
     DeleteView, UpdateView, CreateView)
-from .forms import NoteForm, ChecklistItemForm
+from .forms import NoteForm, ChecklistItemForm, ChecklistItemForm, NoteSwitchForm
 from notebook.models import Note, Notebook
 from checklist.models import Checklist, ChecklistItem
 
@@ -139,3 +139,33 @@ class ChecklistItemCreateView(BaseView):
             messages.add_message(self.request, messages.ERROR, 'Failed to create Checklist item.')
 
         return redirect(reverse('checklist_item_view', kwargs={'pk' : self.kwargs.get('pk') }))
+
+class NoteSwitchView(DetailView, FormView):
+    context_object_name = 'note'
+    form_class = NoteSwitchForm
+    model = Note
+    template_name = 'web/note/switch.html'
+
+    def get_form_kwargs(self): 
+        kwargs = super(NoteSwitchView, self).get_form_kwargs()
+        checklists = Checklist.objects.all()
+        kwargs.update({'checklists' : checklists.values_list('id', 'name')})
+        return kwargs
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+
+        try:
+            checklist = Checklist.objects.get(id=data['checklists'])
+            checklist_item = {'checklist' : checklist, 'title' : self.get_object().title, 'done' : False}
+            ChecklistItem.objects.create(**checklist_item)
+            self.get_object().delete()
+            
+            messages.add_message(self.request, messages.SUCCESS, 'Checklist item is successfully created.')
+            return redirect(reverse('checklist_item_view', kwargs={'pk' : data['checklists']}))
+        
+        except Exception:
+            messages.add_message(self.request, messages.ERROR, 'Failed to update note.')
+            return redirect(reverse('note_update', kwargs={'pk' : self.get_object().pk }))
+
+

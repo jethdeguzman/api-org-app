@@ -1,6 +1,6 @@
 from django import forms
 from notebook.models import Note
-from checklist.models import ChecklistItem
+from checklist.models import ChecklistItem, Checklist
 
 class NoteForm(forms.ModelForm):
     class Meta:
@@ -21,3 +21,15 @@ class ChecklistItemForm(forms.ModelForm):
             'title' : forms.TextInput(attrs={'class' : 'form-control', 'required' : 'required', 'placeholder' : 'Title', 'autocomplete':'off'}),
             'done' : forms.CheckboxInput(attrs={'class' : 'flat'})
         }
+
+class NoteSwitchForm(forms.Form):
+    checklists = forms.ChoiceField(label='Checklists', widget=forms.Select(attrs={'class': 'form-control', 'placeholder' : 'Checklists', 'required' : 'required'}))
+
+    def __init__(self, *args, **kwargs):
+        self.checklists = None
+        if 'checklists' in kwargs:
+            self.checklists = kwargs.pop('checklists')
+        super(NoteSwitchForm, self).__init__(*args, **kwargs)
+        self.fields['checklists'].choices = self.checklists
+
+

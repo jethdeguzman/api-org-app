@@ -15,6 +15,7 @@
         <br>
         {% if pk %}
         <a href="{% url 'note_create' %}" class="btn btn-default"><i class="fa fa-plus-circle"></i> New</a>
+        <a href="{% url 'note_switch' pk=pk %}" class="btn btn-dark"><i class="fa fa-exchange"></i> Add as Checklist Item</a>
         <button type="submit" class="btn btn-danger pull-right btn-continue" data-continue-text="It will now delete this note" form="deleteNoteForm"><i class="fa fa-trash"></i> Delete</button>
         {% endif %}
         <button type="submit" class="btn btn-primary pull-right" form="updateNoteForm"><i class="fa fa-save"></i> Save</button>
